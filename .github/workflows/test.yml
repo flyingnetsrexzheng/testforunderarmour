@@ -1,0 +1,31 @@
+name: CI
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  CIJOB:
+    runs-on: aliyunECS
+    env:
+      ACR: "registry-vpc.cn-shanghai.aliyuncs.com/ua-test/rexzhengflask"
+      DOCKERIMAGE: "rexzhengflask"
+      DOCKERUSER: liangdu
+      DOCKERPASSWD: Aa@12345
+      K8SYAML: "UnderArmourtest.yaml"
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: build
+      run: |
+        docker build -t $ACR:$GITHUB_RUN_ID .
+        docker login -u $DOCKERUSER $ACR -p $DOCKERPASSWD
+        docker push $ACR:$GITHUB_RUN_ID
+        docker image ls | grep $ACR
+        docker rmi $ACR:$GITHUB_RUN_ID
+    - name: deploy
+      run: |
+        eval sed -i 's!REPOSITORY!$ACR!g' $K8SYAML
+        eval sed -i 's!ID!$GITHUB_RUN_ID!g' $K8SYAML
+        kubectl apply -f $K8SYAML
+
