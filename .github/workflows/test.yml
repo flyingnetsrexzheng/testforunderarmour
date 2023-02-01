@@ -12,6 +12,7 @@ jobs:
       DOCKERUSER: liangdu
       DOCKERPASSWD: Aa@12345
       K8SYAML: "UnderArmourtest.yaml"
+      SHFILE: "apply.sh"
 
     steps:
     - name: Checkout
@@ -27,5 +28,5 @@ jobs:
       run: |
         eval sed -i 's!REPOSITORY!$ACR!g' $K8SYAML
         eval sed -i 's!ID!$GITHUB_RUN_ID!g' $K8SYAML
-        kubectl apply -f $K8SYAML
+        sh $apply.sh
 
