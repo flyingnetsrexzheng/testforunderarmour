@@ -28,5 +28,5 @@ jobs:
       run: |
         eval sed -i 's!REPOSITORY!$ACR!g' $K8SYAML
         eval sed -i 's!ID!$GITHUB_RUN_ID!g' $K8SYAML
-        sh $apply.sh
+        sh $SHFILE
 
