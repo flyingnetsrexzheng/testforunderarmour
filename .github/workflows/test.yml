@@ -5,7 +5,7 @@ on:
 
 jobs:
   CIJOB:
-    runs-on: aliyunECS
+    runs-on: aliyunECS-smartcmp
     env:
       ACR: "registry-vpc.cn-shanghai.aliyuncs.com/ua-test/rexzhengflask"
       DOCKERIMAGE: "rexzhengflask"
