@@ -15,7 +15,9 @@ jobs:
       SHFILE: "apply.sh"
       COOKIESFILE: "getcookies"
       CMPLOGINURL: "https://cmp.smartcmp.online:6443/platform-api/login?username=feiluo_user&password=d41e98d1eafa6d6011d3a70f1a5b92f0&loginType=Normal&encrypted=true"
-      #CMPTRIGGERURL: "https://cmp.smartcmp.online:6443/platform-api/pipeline-configs/3d84f7a3-72f0-46d8-8bcb-e3f51117e4ed/executions?triggerType=manual -d '{"globalParams":{"globalParameters":{}},"taskParams":{"stage_1_1_f5ca9f9151a447a58fd4815cc42699aa":{"resourceIds":"8edf7b7e-0107-461a-a43b-8e3dae176e66"}}}'"
+      CMPTRIGGERURL: "https://cmp.smartcmp.online:6443/platform-api/pipeline-configs/3d84f7a3-72f0-46d8-8bcb-e3f51117e4ed/executions?triggerType=manual
+      CMPTRIGGERURLP1: "-d"
+      CMPTRIGGERURLP2: "{"globalParams":{"globalParameters":{}},"taskParams":{"stage_1_1_f5ca9f9151a447a58fd4815cc42699aa":{"resourceIds":"8edf7b7e-0107-461a-a43b-8e3dae176e66"}}}"
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -40,9 +42,9 @@ jobs:
     # The possible outputs of the `quality-gate-status` variable are `PASSED`, `WARN` or `FAILED`.
     #- name: "Example show SonarQube Quality Gate Status value"
     #  run: echo "The Quality Gate status is ${{ steps.sonarqube-quality-gate-check.outputs.quality-gate-status }}"
-    #- name: CheckinSonarQube
-    #  run: |
-    #    sonar-scanner -Dsonar.projectKey=testforunderarmourkey -Dsonar.sources=. -Dsonar.host.url=http://172.31.41.240:9000 -Dsonar.login=7bf27527d808361c0d838d3d6a3c6668a8a4038d
+    - name: CheckinSonarQube
+      run: |
+        sonar-scanner -Dsonar.projectKey=testforunderarmourkey -Dsonar.sources=. -Dsonar.host.url=http://172.31.41.240:9000 -Dsonar.login=7bf27527d808361c0d838d3d6a3c6668a8a4038d
     - name: build
       run: |
         docker build -t $ECR/$DOCKERIMAGE:$GITHUB_RUN_ID .
@@ -59,5 +61,5 @@ jobs:
     - name: deploy-CMP
       run: |
         curl -k -X POST -c $COOKIESFILE $CMPLOGINURL
-        curl -k -X POST -H "Content-Type: application/json" -b $COOKIESFILE $CMPTRIGGERURL 
+        curl -k -X POST -H "Content-Type: application/json" -b $COOKIESFILE $CMPTRIGGERURL $CMPTRIGGERURLP1 $CMPTRIGGERURLP2
 
