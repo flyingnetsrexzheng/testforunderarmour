@@ -17,6 +17,9 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+    - name: CheckinSonarQube
+      run: |
+        sonar-scanner -Dsonar.projectKey=testforunderarmourkey -Dsonar.sources=. -Dsonar.host.url=http://172.31.41.240:9000 -Dsonar.login=7bf27527d808361c0d838d3d6a3c6668a8a4038d
     - name: build
       run: |
         docker build -t $ECR/$DOCKERIMAGE:$GITHUB_RUN_ID .
