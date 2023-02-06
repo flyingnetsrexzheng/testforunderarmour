@@ -17,7 +17,7 @@ jobs:
       CMPLOGINURL: "https://cmp.smartcmp.online:6443/platform-api/login?username=feiluo_user&password=d41e98d1eafa6d6011d3a70f1a5b92f0&loginType=Normal&encrypted=true"
       CMPTRIGGERURL: "https://cmp.smartcmp.online:6443/platform-api/pipeline-configs/3d84f7a3-72f0-46d8-8bcb-e3f51117e4ed/executions?triggerType=manual
       CMPTRIGGERURLP1: "-d"
-      CMPTRIGGERURLP2: "\{\"globalParams\"\:\{\"globalParameters\"\:\{\}\},\"taskParams\"\:\{\"stage_1_1_f5ca9f9151a447a58fd4815cc42699aa\"\:\{\"resourceIds\"\:\"8edf7b7e-0107-461a-a43b-8e3dae176e66\"\}\}\}"
+      #CMPTRIGGERURLP2: "\{\"globalParams\"\:\{\"globalParameters\"\:\{\}\},\"taskParams\"\:\{\"stage_1_1_f5ca9f9151a447a58fd4815cc42699aa\"\:\{\"resourceIds\"\:\"8edf7b7e-0107-461a-a43b-8e3dae176e66\"\}\}\}"
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -61,5 +61,5 @@ jobs:
     - name: deploy-CMP
       run: |
         curl -k -X POST -c $COOKIESFILE $CMPLOGINURL
-        curl -k -X POST -H "Content-Type: application/json" -b $COOKIESFILE $CMPTRIGGERURL $CMPTRIGGERURLP1 $CMPTRIGGERURLP2
+        curl -k -X POST -H "Content-Type: application/json" -b $COOKIESFILE $CMPTRIGGERURL $CMPTRIGGERURLP1 $CMPTRIGGERURLBODY
 
