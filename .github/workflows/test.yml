@@ -61,5 +61,5 @@ jobs:
     - name: deploy-CMP
       run: |
         curl -k -X POST -c $COOKIESFILE $CMPLOGINURL
-        curl -k -X POST -H "Content-Type: application/json" -b $COOKIESFILE $CMPTRIGGERURL $CMPTRIGGERURLP1 ${{ vars.CMPTRIGGERURLBODY }}
+        curl -k -X POST -H "Content-Type: application/json" -b $COOKIESFILE $CMPTRIGGERURL $CMPTRIGGERURLP1 '${{ vars.CMPTRIGGERURLBODY }}'
 
