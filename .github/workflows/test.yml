@@ -60,6 +60,7 @@ jobs:
         eval sed -i 's!ID!$GITHUB_RUN_ID!g' $K8SYAML
     - name: deploy-CMP
       run: |
+        rm -rf $COOKIESFILE
         curl -k -X POST -c $COOKIESFILE $CMPLOGINURL
         curl -k -X POST -H "Content-Type: application/json" -b $COOKIESFILE $CMPTRIGGERURL $CMPTRIGGERURLP1 '${{ vars.CMPTRIGGERURLBODY }}'
 
